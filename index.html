@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>先生のサンプルです</title>
-    <meta name="description" content="先生のサンプル（ゲーム）" />
+    <title>秀吉の伝説</title>
+    <meta name="description" content="秀吉の伝説" />
 
     <link rel="icon" href="favicon.ico" />
     <link rel="stylesheet" href="css/index.css" />
@@ -147,10 +147,13 @@
       </div>
       <div class="filler01"></div>
     </section>
-
-    <!-- フッター -->
-    <footer>
-      <p>Copyright 2024 your id & your name</p>
-    </footer>
+    <script src="../components/footer.js"></script>
+    <script src="../components/bg-image.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const bg = createBgImage("./img/dk-punch.avif");
+        document.body.prepend(bg);
+      });
+    </script>
   </body>
 </html>
