@@ -5,6 +5,7 @@
   backButton.style.position = "fixed";
   backButton.style.top = "10px";
   backButton.style.left = "10px";
+  backButton.style.zIndex = "999";
   backButton.addEventListener("click", () => {
     window.history.back();
   });
