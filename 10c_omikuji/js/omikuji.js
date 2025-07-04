@@ -1,0 +1,300 @@
+"use strict";
+
+const OmikujiGame = (function () {
+  const { animate } = anime;
+
+  const state = {
+    result: null,
+    results: {
+      0: {
+        text: "大吉!!!!!",
+        color: "#FF0000",
+        fontSize: "90px",
+        maxSpeed: 10,
+        maxSize: 30,
+        image: "img/star.png",
+        sound: "sound/omikuji_sound1.mp3",
+        textImage: "img/daikichi.png",
+      },
+      1: {
+        text: "中吉!!!",
+        color: "#ff1493",
+        fontSize: "70px",
+        maxSpeed: 8,
+        maxSize: 20,
+        image: "img/sakura_hanabira.png",
+        sound: "sound/omikuji_sound2.mp3",
+        textImage: "img/chukichi.png",
+      },
+      2: {
+        text: "小吉!!",
+        color: "#ff69b4",
+        fontSize: "60px",
+        maxSpeed: 5,
+        maxSize: 15,
+        image: "img/water1.png",
+        sound: "sound/omikuji_sound3.mp3",
+        textImage: "img/syokichi.png",
+      },
+      3: {
+        text: "末吉!",
+        color: "#ff8c00",
+        fontSize: "50px",
+        maxSpeed: 5,
+        maxSize: 20,
+        image: "img/redLeaves4.png",
+        sound: "sound/omikuji_sound4.mp3",
+        textImage: "img/suekichi.png",
+      },
+      4: {
+        text: "凶。。",
+        color: "#1e90ff",
+        fontSize: "40px",
+        maxSpeed: 5,
+        maxSize: 20,
+        image: "img/snowflakes.png",
+        sound: "sound/omikuji_sound5.mp3",
+        textImage: "img/daikyo.png",
+      },
+    },
+    particles: {
+      number: 100,
+    },
+  };
+
+  const UIController = {
+    elements: {},
+    setButtonResult: function () {
+      const result = state.results[state.result];
+      // const omikujiText = UIController.elements.omikujiText;
+
+      // omikujiText.innerText = result.text;
+      // omikujiText.style.color = result.color;
+      // omikujiText.style.fontSize = result.fontSize;
+
+      omikujiTextImage.src = result.textImage;
+      omikujiTextImage.classList.add("omikujiPaper");
+      omikujiTextImage.addEventListener("animationend", () => {
+        omikujiTextImage.classList.remove("omikujiPaper");
+      });
+
+      UIController.showSnow(result.maxSize, result.maxSpeed, result.image);
+      UIController.playSound();
+    },
+    setEvil: function () {
+      UIController.elements.background.classList.add("evil");
+      ParticleSystem.createParticles(state.result);
+
+      // HeaderAnimation.headerGlitch();
+    },
+    showSnow: function (
+      maxSize = 20,
+      maxSpeed = 5,
+      image = "img/sakura_hanabira.png"
+    ) {
+      // snowfall stop
+      $(document).snowfall("clear");
+      // jQueryのsnowfall
+      $(document).ready(function () {
+        $(document).snowfall({
+          maxSpeed, // 最大速度
+          minSpeed: 1, // 最小速度
+          maxSize, // 最大サイズ
+          minSize: 1, // 最小サイズ
+          image,
+        });
+      });
+    },
+    playSound: function () {
+      const audioElement = UIController.elements.soundElement;
+      audioElement.src = state.results[state.result].sound;
+
+      if (audioElement.playing) {
+        audioElement.pause();
+        audioElement.currentTime = 0;
+      }
+
+      audioElement.play().catch((error) => {
+        console.warn("Audio playback failed:", error);
+      });
+    },
+  };
+
+  const GameController = {
+    getRandomResult: function () {
+      return Math.floor(Math.random() * Object.keys(state.results).length);
+    },
+    handleResult: function (result) {
+      state.result = result;
+      UIController.setButtonResult();
+
+      // if (state.result !== 2) {
+      //   switch (result) {
+      //     case 0:
+      //       state.result = 0;
+      //       UIController.setButtonResult(state.results[state.result]);
+      //       ParticleSystem.createParticles(state.result);
+      //       break;
+      //     case 1:
+      //       state.result = 1;
+      //       UIController.setButtonResult(state.results[state.result]);
+      //       break;
+      //     case 2:
+      //       state.result = 2;
+      //       UIController.setButtonResult(state.results[state.result]);
+      //       break;
+      //   }
+      // } else {
+      //   // get the number part of fontSize
+      //   const currentSize = parseFloat(
+      //     UIController.elements.button.style.fontSize
+      //   );
+      //   if (currentSize > 200) {
+      //     UIController.setEvil();
+      //   } else {
+      //     UIController.elements.button.style.fontSize = currentSize * 2 + "px";
+      //   }
+      // }
+    },
+  };
+  const ParticleSystem = {
+    createParticles: function (result) {
+      const particleContainerElement = UIController.elements.particleContainer;
+
+      // Clear any existing particles
+      particleContainerElement.innerHTML = "";
+
+      const createParticle = () => {
+        const particleItemElement = document.createElement("div");
+        particleItemElement.innerText = state.results[state.result].text;
+        particleItemElement.style.color = state.results[state.result].color;
+        particleItemElement.style.fontSize =
+          state.results[state.result].fontSize;
+        particleItemElement.classList.add("particle-item");
+
+        particleItemElement.style.left = Math.random() * 100 + "vw";
+        particleItemElement.style.top = Math.random() * -10 - 10 + "vh";
+        particleContainerElement.appendChild(particleItemElement);
+        animateParticle(particleItemElement);
+      };
+
+      const animateParticle = (item) => {
+        animate(item, {
+          y: [
+            {
+              to: "110vh",
+              duration: Math.random() * 2000 + 2000,
+            },
+          ],
+          delay: Math.random() * 1000,
+        });
+      };
+
+      // let the particles go
+      for (let i = 0; i < state.particles.number; i++) {
+        createParticle();
+      }
+    },
+  };
+  const HeaderAnimation = {
+    headerGlitch: function () {
+      const headerElement = UIController.elements.headerElement;
+      if (!headerElement) {
+        console.error("Header element not found");
+        return;
+      }
+
+      console.log("Header element", headerElement);
+
+      animate(headerElement, {
+        // scale: 5,
+        x: 100,
+
+        // x: [
+        //   { value: -100, duration: 100, easing: "easeInOutQuad" },
+        //   { value: 100, duration: 100, easing: "easeInOutQuad" },
+        //   { value: -100, duration: 100, easing: "easeInOutQuad" },
+        //   { value: 0, duration: 100, easing: "easeInOutQuad" },
+        // ],
+        // loop: true,
+      });
+    },
+  };
+  const EventHandlers = {
+    setupEventListeners: function () {
+      const buttonElement = UIController.elements.button;
+      buttonElement.addEventListener("click", () => {
+        let result = GameController.getRandomResult();
+        while (result === state.result) {
+          result = GameController.getRandomResult();
+        }
+
+        GameController.handleResult(result);
+      });
+    },
+  };
+
+  return {
+    init: function () {
+      // Cache DOM elements
+      UIController.elements = {
+        button: document.querySelector("#btn1"),
+        background: document.querySelector("body"),
+        particleContainer: document.querySelector(".particle-container"),
+        headerElement: document.querySelector("header"),
+        omikujiText: document.querySelector("#omikujiText"),
+        omikujiTextImage: document.querySelector("#omikujiTextImage"),
+        soundElement: document.createElement("audio"),
+      };
+
+      // Verify required elements exist
+      if (
+        !UIController.elements.button ||
+        !UIController.elements.background ||
+        !UIController.elements.particleContainer ||
+        !UIController.elements.headerElement ||
+        !UIController.elements.omikujiText
+      ) {
+        console.error("Required DOM elements not found");
+        return;
+      }
+
+      // Set up event listeners
+      EventHandlers.setupEventListeners();
+
+      // Show welcome message
+      const popMessage = "いらっしゃい！おみくじ引いてって！";
+      setTimeout(() => {
+        window.alert(popMessage);
+      }, 5000);
+
+      // ヘッダーのテキストエフェクト
+      $("header").textillate({
+        loop: false, // ループのオンオフ
+        minDisplayTime: 2000, // テキストが置き換えられるまでの表示時間
+        initialDelay: 2000, // 遅延時間
+        autoStart: true, // アニメーションを自動的にスタート
+        in: {
+          // フェードインのエフェクトの詳細設定
+          effect: "fadeInLeftBig", // エフェクトの名前(animate.css参照)
+          delayScale: 1.5, // 遅延時間の指数
+          delay: 50, // 文字ごとの遅延時間
+          sync: false, // trueはアニメーションをすべての文字に同時に適用
+          shuffle: true, // trueは文字を順番にではなく、ランダムに
+        },
+      });
+      // おみくじボタン(id="btn1") ボヤァと表示させる
+      $(function () {
+        ScrollReveal().reveal("#btn1", { duration: 9000 });
+      });
+
+      UIController.showSnow();
+    },
+  };
+})();
+
+// Initialize the game when DOM is ready
+document.addEventListener("DOMContentLoaded", OmikujiGame.init, false);
+// The third parameter (false) is for backwards compatibility with older browsers
+// It's not needed in modern browsers
+// https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#specifications

@@ -1,0 +1,304 @@
+@charset "utf-8";
+
+.kaisei-decol-regular {
+  font-family: "Kaisei Decol", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+html {
+  font-size: 16px;
+}
+
+/* 「*」はユニバーサルセレクタ(すべての要素を対象にするセレクタ)でbox-sizing: border-box;を指定 */
+/* この指定(してい)はborderとpaddingをボックスサイズ(widthとheight)の中に含めて算出するので、スタイリングがしやすい*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  max-width: 100vw;
+  min-height: 100vh;
+  margin: 0;
+  line-height: normal;
+  /*ブラウザが自動的に行間を決める*/
+  font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN",
+    "Hiragino Sans", Meiryo, sans-serif;
+  /* background-color: #000; */
+  /* background-image: url("../assets/background-min.jpg");
+    background-size: cover;
+    background-repeat: no-repeat; */
+  overflow: hidden;
+  position: relative;
+}
+
+/* Styling for the background image container */
+.bg-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.bg-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Make image cover the entire container */
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+body.evil .bg-image img {
+  filter: invert(1);
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  padding-top: 40px;
+  color: rgba(253, 4, 79, 0.7);
+  font-size: 38px;
+  font-weight: bold;
+  text-shadow: 5px 5px 5px rgba(255, 255, 255, 0.65);
+  text-align: center;
+  position: relative;
+  z-index: 20;
+}
+
+.wrapper {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  padding-bottom: 23px;
+  text-align: center;
+  z-index: 20;
+}
+
+#btn1 {
+  position: relative;
+  margin: 0 auto;
+  width: 280px;
+  height: 280px;
+  background-image: url("../img/omikuji3.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  user-select: none;
+
+  /* display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 250px;
+  border-radius: 999px;
+  color: rgb(255, 0, 212);
+  font-weight: bold;
+  font-size: 40px;
+  text-align: center;
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.65);
+  box-shadow: 0 10px 0 grey; */
+  /* justify-content: center; */
+  /* ? */
+  /* transition: all 0.3s ease-in-out; */
+}
+
+#omikujiText {
+  position: relative;
+  margin: 10px auto;
+}
+
+.omikujiPaper {
+  animation: fadeDown 1.5s forwards;
+}
+@keyframes fadeDown {
+  0% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(20px);
+  }
+}
+
+#btn1:hover {
+  /* filter: hue-rotate(90deg); */
+  animation: shaking 0.3s infinite;
+}
+
+#btn1:active {
+  position: relative;
+  top: 5px;
+  left: 5px;
+}
+
+/* #btn1:active > span {
+  animation: blurBlink 0.6s ease-in-out;
+} */
+
+footer > p {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  margin: 0;
+  padding: 1px;
+  color: whitesmoke;
+  font: 16px Rajdhani;
+  text-align: center;
+  background: rgba(1, 24, 31, 0.7);
+}
+
+.particle-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 30; /* Above content */
+  overflow: hidden;
+}
+
+/* Style for individual particles */
+.particle-item {
+  position: absolute;
+  display: inline-block;
+  font-weight: bold;
+  user-select: none;
+  pointer-events: none;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+.shutter {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  margin: 0;
+  padding: 0;
+  background-color: #1e1e1e;
+  animation: byeShutter 2.5s forwards;
+}
+
+.shutter::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  margin: auto;
+  background-color: #fff;
+  animation: shutterOpen 2.5s forwards;
+}
+
+/* animation */
+
+@keyframes shaking {
+  0% {
+    transform: translate(0, 0) rotateZ(0deg);
+  }
+
+  25% {
+    transform: translate(2px, 2px) rotate(1deg);
+  }
+
+  50% {
+    transform: translate(0, 0) rotateZ(0deg);
+  }
+
+  75% {
+    transform: translate(2px, 0px) rotate(-1deg);
+  }
+
+  100% {
+    transform: translate(0, 0) rotateZ(0deg);
+  }
+}
+@keyframes byeShutter {
+  70% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    display: none;
+    z-index: -1;
+  }
+}
+
+@keyframes shutterOpen {
+  0% {
+    width: 0;
+    height: 0.05em;
+  }
+
+  50% {
+    width: 100%;
+    height: 0.05em;
+  }
+
+  90% {
+    width: 100%;
+    height: 100%;
+  }
+
+  100% {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+@keyframes blurBlink {
+  0% {
+    filter: blur(0);
+  }
+
+  50% {
+    filter: blur(8px);
+  }
+
+  100% {
+    filter: blur(0);
+  }
+}
+
+/* media query */
+
+@media screen and (max-width: 480px) {
+  body {
+  }
+
+  .bg-image img {
+    object-position: 75% center;
+  }
+
+  header {
+    padding-top: 20px;
+    font-size: 30px;
+  }
+
+  #btn1 {
+    width: 260px;
+    height: 260px;
+  }
+
+  #omikujiText {
+    margin: 30px;
+  }
+}

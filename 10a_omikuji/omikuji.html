@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <title>おみくじゲーム</title>
+    <link rel="stylesheet" href="./css/omikuji.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kaisei+Decol&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body class="kaisei-decol-regular">
+    <div class="bg-image">
+      <img src="./img/background-min.jpg" />
+    </div>
+    <div class="shutter opening"></div>
+
+    <header>
+      <span>今</span><span>日</span><span>の</span><span>あ</span><span>な</span
+      ><span>た</span><span>の</span><span>運</span><span>勢</span
+      ><span>は</span><span>？</span>
+    </header>
+    <div class="wrapper" title="大吉だといいね～">
+      <div class="omikuji">
+        <div id="btn1"></div>
+        <div id="omikujiText"></div>
+      </div>
+      <footer>
+        <p>Copyright 2025 s247142 Han Tei</p>
+      </footer>
+    </div>
+
+    <div class="particle-container"></div>
+
+    <div id="back-button-container"></div>
+    <script src="../universal-button.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script src="assets/snowfall.jquery.min.js"></script>
+    <script src="assets/jquery.lettering.js"></script>
+    <script src="assets/jquery.textillate.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/animejs/lib/anime.iife.min.js"></script>
+    <script src="./js/omikuji.js"></script>
+  </body>
+</html>
