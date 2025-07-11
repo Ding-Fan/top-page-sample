@@ -224,6 +224,8 @@ const OmikujiGame = (function () {
     setupEventListeners: function () {
       const buttonElement = UIController.elements.button;
       buttonElement.addEventListener("click", () => {
+        console.log("クリックしたよ");
+
         let result = GameController.getRandomResult();
         while (result === state.result) {
           result = GameController.getRandomResult();

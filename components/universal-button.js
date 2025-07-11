@@ -6,6 +6,11 @@
   backButton.style.top = "10px";
   backButton.style.left = "10px";
   backButton.style.zIndex = "999";
+  backButton.style.padding = "10px 10px";
+  backButton.style.backgroundColor = "#007222";
+  backButton.style.color = "#ffffff";
+  backButton.style.border = "none";
+  backButton.style.borderRadius = "5px";
   backButton.addEventListener("click", () => {
     window.history.back();
   });
