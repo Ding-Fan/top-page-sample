@@ -1,21 +1,22 @@
+"use strict";
+
 document.addEventListener("DOMContentLoaded", function () {
-  const num1Input = document.getElementById("num1");
-  const num2Input = document.getElementById("num2");
-  const calcTypeSelect = document.getElementById("calcType");
-  const btnEqual = document.getElementById("btnEqual");
-  const resultDiv = document.getElementById("result");
+  const elementSelect = document.getElementById("calcType");
+  const elementNum1 = document.getElementById("num1");
+  const elementNum2 = document.getElementById("num2");
+  const elementResult = document.getElementById("result");
 
   function calculate() {
-    const num1 = parseFloat(num1Input.value) || 0;
-    const num2 = parseFloat(num2Input.value) || 0;
-    const operation = calcTypeSelect.value;
+    const num1 = Number(elementNum1.value) || 0;
+    const num2 = Number(elementNum2.value) || 0;
+    const calcType = elementSelect.value;
     let result;
 
-    switch (operation) {
+    switch (calcType) {
       case "type-add":
         result = num1 + num2;
         break;
-      case "type-substract":
+      case "type-subtract":
         result = num1 - num2;
         break;
       case "type-multiply":
@@ -28,12 +29,12 @@ document.addEventListener("DOMContentLoaded", function () {
           result = num1 / num2;
         }
         break;
-      default:
-        result = "Error: Invalid operation";
     }
 
-    resultDiv.textContent = result;
+    elementResult.textContent = result;
   }
 
-  btnEqual.addEventListener("click", calculate);
+  elementSelect.addEventListener("change", calculate);
+  elementNum1.addEventListener("input", calculate);
+  elementNum2.addEventListener("input", calculate);
 });
