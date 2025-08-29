@@ -78,7 +78,7 @@ input[type="number"] {
   cursor: pointer;
 }
 
-#btnEqual {
+/* #btnEqual {
   margin: 0.05em;
   padding: 0;
   width: 2em;
@@ -87,9 +87,9 @@ input[type="number"] {
   text-align: center;
   vertical-align: middle;
   cursor: pointer;
-}
+} */
 /* 「＝」をボタンにする */
-/* #btnEqual {
+#btnEqual {
   margin: 0.05em;
   padding: 0;
   width: 2em;
@@ -105,7 +105,7 @@ input[type="number"] {
 }
 #btnEqual:active {
   transform: translateY(4px);
-} */
+}
 
 #result {
   margin: 0.05em;
