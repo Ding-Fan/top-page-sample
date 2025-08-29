@@ -6,10 +6,15 @@ document.addEventListener("DOMContentLoaded", function () {
   const elementNum2 = document.getElementById("num2");
   const elementResult = document.getElementById("result");
 
-  function calculate() {
+  function update() {
     const num1 = Number(elementNum1.value) || 0;
     const num2 = Number(elementNum2.value) || 0;
     const calcType = elementSelect.value;
+
+    elementResult.textContent = calculate(num1, num2, calcType);
+  }
+
+  function calculate(num1, num2, calcType) {
     let result;
 
     switch (calcType) {
@@ -31,10 +36,10 @@ document.addEventListener("DOMContentLoaded", function () {
         break;
     }
 
-    elementResult.textContent = result;
+    return result;
   }
 
-  elementSelect.addEventListener("change", calculate);
-  elementNum1.addEventListener("input", calculate);
-  elementNum2.addEventListener("input", calculate);
+  elementSelect.addEventListener("change", update);
+  elementNum1.addEventListener("input", update);
+  elementNum2.addEventListener("input", update);
 });
