@@ -83,6 +83,13 @@ Since this is a static site with no build process:
 
 ## Development Guidelines
 
+### Calculator Implementation Notes
+The `03_calcuator(button)/` directory contains a calculator with both mouse and keyboard input support:
+- **Event Handling**: Uses event delegation pattern with single listener on main container
+- **Keyboard Support**: `keydown` events mapped to calculator functions (numbers, operators, Enter/=, Escape/c)
+- **State Management**: Uses global variables (`wkFirst`, `wkTotal`, `wkCalc`, `wkBefore`) to track calculation state
+- **Common Issues**: Variable naming typos (e.g., `elementcalcLog` instead of `elementCalcLog`) may cause spell-check warnings
+
 ### Code Writing Permission System
 This repository uses a permission-based development approach:
 
