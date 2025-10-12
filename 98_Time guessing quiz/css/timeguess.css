@@ -22,6 +22,7 @@ body{
 }
 
 body.success {
+  background-color: unset;
   background-image: url(../img/fireworks.gif);
   background-size: cover;
   background-position: center;
