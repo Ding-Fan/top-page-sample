@@ -14,13 +14,15 @@ const soundTrack = {
   start: {
     audio: new Audio("../sound/start.mp3"),
     play: function () {
+      stopAllAudio();
       this.audio.currentTime = 0;
       this.audio.play();
     },
   },
   stop: {
-    audio: new Audio("../sound/stop1.mp3"),
+    audio: new Audio("../sound/stop1_long.mp3"),
     play: function () {
+      stopAllAudio();
       this.audio.currentTime = 0;
       this.audio.play();
     },
@@ -28,18 +30,27 @@ const soundTrack = {
   reset: {
     audio: new Audio("../sound/reset.mp3"),
     play: function () {
+      stopAllAudio();
       this.audio.currentTime = 0;
       this.audio.play();
     },
   },
   success: {
-    audio: new Audio("../sound/stop2.mp3"),
+    audio: new Audio("../sound/stop2_long.mp3"),
     play: function () {
+      stopAllAudio();
       this.audio.currentTime = 0;
       this.audio.play();
     },
   },
 };
+
+const stopAllAudio = () => {
+  for (const key in soundTrack) {
+    soundTrack[key].audio.pause();
+    soundTrack[key].audio.currentTime = 0;
+  }
+}
 
 // ボタンを"初期"状態とする
 setButtonStateInitial();
