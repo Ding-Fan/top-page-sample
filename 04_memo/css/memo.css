@@ -1,45 +1,57 @@
 @charset "utf-8";
 
 html {
-    /* ブラウザのデフォルトが16px                        */
-    /* デフォルトの16pxの代わりに1emが10pxになるように調整 */
-    font-size: 62.5%;
-  }
+  /* ブラウザのデフォルトが16px                        */
+  /* デフォルトの16pxの代わりに1emが10pxになるように調整 */
+  font-size: 62.5%;
+}
 
-body{
+body {
   line-height: 1.5;
   font-size: 1.6rem; /* 16px */
-  font-family: "Helvetica Neue",
-  Arial,
-  "Hiragino Kaku Gothic ProN",
-  "Hiragino Sans",
-  Meiryo,
-  sans-serif;
+  font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN",
+    "Hiragino Sans", Meiryo, sans-serif;
   text-align: center;
-  background-color:rgba(233, 168, 227, 0.6);
+  background-color: rgba(237, 223, 173, 0.979);
   background-blend-mode: soft-light;
   /* background-image: url(../img/backimg.JPG); */
   /* background-size: cover; */
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.3) 1px, transparent 1px);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 0;
 }
 
-header, main, footer, h1, h2, h3, p, div, table, .field, .btn-area, .filler01 {
-    margin: 0.5em 0em 0em 0em;
-    padding: 0.1em;
+header,
+main,
+footer,
+h1,
+h2,
+h3,
+p,
+div,
+table,
+.field,
+.btn-area,
+.filler01 {
+  margin: 0.5em 0em 0em 0em;
+  padding: 0.1em;
 }
-th, td {
-    line-height: 1.2em;
-    padding: 0.1em;
+th,
+td {
+  line-height: 1.2em;
+  padding: 0.1em;
 }
 /*******************************************************/
 /* 見出し                                              */
 /*******************************************************/
 h1 {
-    color: rgb(165, 243, 243);
+  color: rgb(165, 243, 243);
 }
 h2 {
-    /* color: grey; */
-    color: whitesmoke;
-    font-weight: 1000;
+  /* color: grey; */
+  color: whitesmoke;
+  font-weight: 1000;
 }
 
 /*******************************************************/
@@ -58,12 +70,12 @@ h2 {
 /* ラベル */
 label {
   position: absolute;
-  left:0.5em;
+  left: 0.5em;
   color: whitesmoke;
   font-weight: 1000;
 }
-label::after{
-  margin-left: 1.0em;
+label::after {
+  margin-left: 1em;
   padding: 0px 6px 0px 6px;
   border-radius: 4px;
   font-size: 0.6em;
@@ -75,7 +87,7 @@ label::after{
 /* ★自分でコーディングする！(code by yourself) ... 疑似要素「::after」を使って、「必須」の文字を定義する。*/
 
 /* テキストエリア */
-textarea{
+textarea {
   position: absolute;
   top: 2em;
   left: 3em;
@@ -87,11 +99,11 @@ textarea::placeholder {
 /* ★自分でコーディングする！(code by yourself)...  疑似要素「::placeholder」を使って、textareaの文字の色を定義する。*/
 
 /* ボタン */
-.btn-area{
-  margin-left:3em;
+.btn-area {
+  margin-left: 3em;
   text-align: left;
 }
-#save{
+#save {
   padding: 0.5em;
   border-radius: 0.3em;
   color: whitesmoke;
@@ -108,20 +120,20 @@ textarea::placeholder {
 @media screen and (max-width: 480px) {
   /* ラベル */
   label {
-    left:0.1em;
+    left: 0.1em;
   }
 
   /* テキストエリア */
-  textarea{
+  textarea {
     left: 0.1em;
   }
 
   /* ボタン */
-  .btn-area{
-    margin-left:0.1em;
+  .btn-area {
+    margin-left: 0.1em;
   }
-  
-  table{
+
+  table {
     width: 100%;
     margin-left: 0.1em;
   }
@@ -131,10 +143,10 @@ textarea::placeholder {
 /* class=back                                         */
 /* id=btn99 backボタン                                 */
 /*******************************************************/
-.back{
+.back {
   text-align: left;
 }
-#btn99{
+#btn99 {
   padding: 0.5em;
   border-radius: 0.3em;
   color: whitesmoke;
