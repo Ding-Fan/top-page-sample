@@ -8,6 +8,7 @@ document.addEventListener(
       viewStorage();
       saveLocalStorage();
       delLocalStorage();
+      allClearLocalStorage();
       selectTable();
     }
   },
@@ -64,6 +65,26 @@ function delLocalStorage() {
   );
 }
 
+function allClearLocalStorage() {
+  const allClear = document.getElementById("allClear");
+  allClear.addEventListener(
+    "click",
+    function (e) {
+      e.preventDefault();
+      let w_confirm = window.confirm("LocalStorageのデータをすべて削除します。\nよろしいですか？");
+
+      if (w_confirm === true) {
+        localStorage.clear();
+        viewStorage();
+        let w_msg = "LocalStorageのデータをすべて削除しました。";
+        window.alert(w_msg);
+        document.getElementById("textKey").value = "";
+        document.getElementById("textMemo").value = "";
+      }
+    },
+    false
+  );
+}
 
 function selectTable() {
   const select = document.getElementById("select");
