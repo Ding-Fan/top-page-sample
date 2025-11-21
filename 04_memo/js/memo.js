@@ -135,4 +135,13 @@ function viewStorage() {
     td2.innerHTML = w_key;
     td3.innerHTML = localStorage.getItem(w_key);
   }
+
+  $("#table1").tablesorter(
+    {
+      sortList: [[1,0]]
+    }
+  );  
+
+  $("#table1").trigger("update");
 }
+
