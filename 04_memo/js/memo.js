@@ -70,9 +70,10 @@ function delLocalStorage() {
           let w_msg =
             "LocalStorageから " + key + " " + value + " を削除しました。";
           window.alert(w_msg);
-          document.getElementById("textKey").value = "";
-          document.getElementById("textMemo").value = "";
         }
+
+        document.getElementById("textKey").value = "";
+        document.getElementById("textMemo").value = "";
       }
     },
     false
