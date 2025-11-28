@@ -57,13 +57,14 @@ function delLocalStorage() {
       w_sel = selectRadioBtn();
 
       if (w_sel === "1") {
+        const key = document.getElementById("textKey").value;
+        const value = document.getElementById("textMemo").value;
+
         let w_confirm = window.confirm(
           `LocalStorageから\n「${key} ${value}」\nを削除（delete）しますか？`
         );
 
         if (w_confirm === true) {
-          const key = document.getElementById("textKey").value;
-          const value = document.getElementById("textMemo").value;
           localStorage.removeItem(key);
           viewStorage();
           let w_msg =
