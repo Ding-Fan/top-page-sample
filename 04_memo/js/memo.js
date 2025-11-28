@@ -15,7 +15,6 @@ document.addEventListener(
   false
 );
 
-
 function saveLocalStorage() {
   const save = document.getElementById("save");
   save.addEventListener(
@@ -25,16 +24,23 @@ function saveLocalStorage() {
       const key = document.getElementById("textKey").value;
       const value = document.getElementById("textMemo").value;
 
-      if(key === "" || value === ""){
-          window.alert("Key、Memoはいずれも必須です。");
-          return;
+      if (key === "" || value === "") {
+        window.alert("Key、Memoはいずれも必須です。");
+        return;
       } else {
+        let w_confirm = window.confirm(
+          `LocalStorageに\n「${key} ${value}」\nを保存（save）しますか？`
+        );
+
+        if (w_confirm === true) {
           localStorage.setItem(key, value);
           viewStorage();
-          let w_msg = "LocalStorageに " + key + " " + value + " を保存しました。";
+          let w_msg =
+            "LocalStorageに " + key + " " + value + " を保存しました。";
           window.alert(w_msg);
           document.getElementById("textKey").value = "";
           document.getElementById("textMemo").value = "";
+        }
       }
     },
     false
@@ -51,14 +57,21 @@ function delLocalStorage() {
       w_sel = selectRadioBtn();
 
       if (w_sel === "1") {
-        const key = document.getElementById("textKey").value;
-        const value = document.getElementById("textMemo").value;
-        localStorage.removeItem(key)
-        viewStorage();
-        let w_msg = "LocalStorageから " + key + " " + value + " を削除しました。";
-        window.alert(w_msg);
-        document.getElementById("textKey").value = "";
-        document.getElementById("textMemo").value = "";
+        let w_confirm = window.confirm(
+          `LocalStorageから\n「${key} ${value}」\nを削除（delete）しますか？`
+        );
+
+        if (w_confirm === true) {
+          const key = document.getElementById("textKey").value;
+          const value = document.getElementById("textMemo").value;
+          localStorage.removeItem(key);
+          viewStorage();
+          let w_msg =
+            "LocalStorageから " + key + " " + value + " を削除しました。";
+          window.alert(w_msg);
+          document.getElementById("textKey").value = "";
+          document.getElementById("textMemo").value = "";
+        }
       }
     },
     false
@@ -71,7 +84,9 @@ function allClearLocalStorage() {
     "click",
     function (e) {
       e.preventDefault();
-      let w_confirm = window.confirm("LocalStorageのデータをすべて削除します。\nよろしいですか？");
+      let w_confirm = window.confirm(
+        "LocalStorageのデータをすべて削除します。\nよろしいですか？"
+      );
 
       if (w_confirm === true) {
         localStorage.clear();
@@ -105,11 +120,13 @@ function selectRadioBtn() {
 
   for (let i = 0; i < radio1.length; i = i + 1) {
     if (radio1[i].checked) {
-      document.getElementById("textKey").value = table1.rows[i + 1].cells[1].firstChild.data;
-      document.getElementById("textMemo").value = table1.rows[i + 1].cells[2].firstChild.data;
-      return w_sel = "1";
+      document.getElementById("textKey").value =
+        table1.rows[i + 1].cells[1].firstChild.data;
+      document.getElementById("textMemo").value =
+        table1.rows[i + 1].cells[2].firstChild.data;
+      return (w_sel = "1");
     }
-  } 
+  }
 
   alert("１つ選択（select）してください。");
 }
@@ -117,7 +134,7 @@ function selectRadioBtn() {
 function viewStorage() {
   const list = document.getElementById("list");
 
-  while(list.rows[0]) list.deleteRow(0);
+  while (list.rows[0]) list.deleteRow(0);
 
   for (let i = 0; i < localStorage.length; i = i + 1) {
     let w_key = localStorage.key(i);
@@ -136,12 +153,9 @@ function viewStorage() {
     td3.innerHTML = localStorage.getItem(w_key);
   }
 
-  $("#table1").tablesorter(
-    {
-      sortList: [[1,0]]
-    }
-  );  
+  $("#table1").tablesorter({
+    sortList: [[1, 0]],
+  });
 
   $("#table1").trigger("update");
 }
-
