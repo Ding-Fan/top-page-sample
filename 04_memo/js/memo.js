@@ -141,7 +141,7 @@ function selectCheckBox() {
   document.getElementById("textMemo").value = w_textMemo;
   if (w_cnt === 1) {
     return (w_sel = "1");
-  } else if (w_cnt > 1) {
+  } else {
     alert("１つ選択（select）してください。");
   }
 
