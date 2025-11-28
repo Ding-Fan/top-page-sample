@@ -120,7 +120,7 @@ function selectTable() {
 function selectCheckBox() {
   let w_sel = "0";
   let w_cnt = 0;
-  const chkbox1 = document.getElementsByName("checkbox1");
+  const chkbox1 = document.getElementsByName("chkbox1");
   // const radio1 = document.getElementsByName("radio1");
   const table1 = document.getElementById("table1");
   let w_textKey = "";
