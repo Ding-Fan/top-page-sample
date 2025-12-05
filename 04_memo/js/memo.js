@@ -2,7 +2,7 @@ document.addEventListener(
   "DOMContentLoaded",
   function () {
     if (typeof localStorage === "undefined") {
-      window.alert("このブラウザはLocal Storage機能が実装されていません");
+      showError("このブラウザはLocal Storage機能が実装されていません");
       return;
     } else {
       viewStorage();
@@ -25,22 +25,21 @@ function saveLocalStorage() {
       const value = document.getElementById("textMemo").value;
 
       if (key === "" || value === "") {
-        window.alert("Key、Memoはいずれも必須です。");
+        showError("Key、Memoはいずれも必須です。");
         return;
       } else {
-        let w_confirm = window.confirm(
-          `LocalStorageに\n「${key} ${value}」\nを保存（save）しますか？`
-        );
-
-        if (w_confirm === true) {
-          localStorage.setItem(key, value);
-          viewStorage();
-          let w_msg =
-            "LocalStorageに " + key + " " + value + " を保存しました。";
-          window.alert(w_msg);
-          document.getElementById("textKey").value = "";
-          document.getElementById("textMemo").value = "";
-        }
+        let w_msg = `LocalStorageに\n「${key} ${value}」\nを保存（save）しますか？`;
+        showConfirm(w_msg).then(function (result) {
+          if (result.value === true) {
+            localStorage.setItem(key, value);
+            viewStorage();
+            let w_msg =
+              "LocalStorageに " + key + " " + value + " を保存しました。";
+            showSuccess(w_msg);
+            document.getElementById("textKey").value = "";
+            document.getElementById("textMemo").value = "";
+          }
+        });
       }
     },
     false
@@ -59,24 +58,23 @@ function delLocalStorage() {
       w_cnt = selectCheckBox("del");
 
       if (w_cnt >= 1) {
-        let w_confirm = window.confirm(
+        showConfirm(
           `LocalStorageから選択されている ${w_cnt} 件を削除（delete）しますか？`
-        );
-
-        if (w_confirm === true) {
-          for (let i = 0; i < chkbox1.length; i = i + 1) {
-            if (chkbox1[i].checked) {
-              let w_key = table1.rows[i + 1].cells[1].firstChild.data;
-              localStorage.removeItem(w_key);
+        ).then(function (result) {
+          if (result.value === true) {
+            for (let i = 0; i < chkbox1.length; i = i + 1) {
+              if (chkbox1[i].checked) {
+                let w_key = table1.rows[i + 1].cells[1].firstChild.data;
+                localStorage.removeItem(w_key);
+              }
             }
+            viewStorage();
+            let w_msg = `LocalStorageから ${w_cnt} 件を削除しました。`;
+            showSuccess(w_msg);
+            document.getElementById("textKey").value = "";
+            document.getElementById("textMemo").value = "";
           }
-          viewStorage();
-          let w_msg = `LocalStorageから ${w_cnt} 件を削除しました。`;
-          window.alert(w_msg);
-        }
-
-        document.getElementById("textKey").value = "";
-        document.getElementById("textMemo").value = "";
+        });
       }
     },
     false
@@ -89,18 +87,18 @@ function allClearLocalStorage() {
     "click",
     function (e) {
       e.preventDefault();
-      let w_confirm = window.confirm(
+      showConfirm(
         "LocalStorageのデータをすべて削除します。\nよろしいですか？"
-      );
-
-      if (w_confirm === true) {
-        localStorage.clear();
-        viewStorage();
-        let w_msg = "LocalStorageのデータをすべて削除しました。";
-        window.alert(w_msg);
-        document.getElementById("textKey").value = "";
-        document.getElementById("textMemo").value = "";
-      }
+      ).then(function (result) {
+        if (result.value === true) {
+          localStorage.clear();
+          viewStorage();
+          let w_msg = "LocalStorageのデータをすべて削除しました。";
+          showSuccess(w_msg);
+          document.getElementById("textKey").value = "";
+          document.getElementById("textMemo").value = "";
+        }
+      });
     },
     false
   );
@@ -146,7 +144,8 @@ function selectCheckBox(mode) {
     if (w_cnt === 1) {
       return w_cnt;
     } else {
-      alert("１つ選択（select）してください。");
+      showWarning("１つ選択（select）してください。");
+      return 0;
     }
   }
 
@@ -154,7 +153,8 @@ function selectCheckBox(mode) {
     if (w_cnt >= 1) {
       return w_cnt;
     } else {
-      alert("１つ以上選択（select）してください。");
+      showWarning("１つ以上選択（select）してください。");
+      return 0;
     }
   }
 }
@@ -186,4 +186,45 @@ function viewStorage() {
   });
 
   $("#table1").trigger("update");
+}
+
+// SweetAlert2 preset functions
+function showError(message, options = {}) {
+  return Swal.fire({
+    title: "Memo app",
+    html: message,
+    type: "error",
+    allowOutsideClick: false,
+    ...options
+  });
+}
+
+function showSuccess(message, options = {}) {
+  return Swal.fire({
+    title: "Memo app",
+    html: message,
+    type: "success",
+    allowOutsideClick: false,
+    ...options
+  });
+}
+
+function showConfirm(message, options = {}) {
+  return Swal.fire({
+    title: "Memo app",
+    html: message,
+    type: "question",
+    showCancelButton: true,
+    ...options
+  });
+}
+
+function showWarning(message, options = {}) {
+  return Swal.fire({
+    title: "Memo app",
+    html: message,
+    type: "warning",
+    allowOutsideClick: false,
+    ...options
+  });
 }

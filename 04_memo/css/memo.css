@@ -184,3 +184,8 @@ table tr {
 .width60 {
   width: 60%;
 }
+
+.swal2-title, .swal2-content {
+  color: grey !important;
+  font-weight: bold !important;
+}
