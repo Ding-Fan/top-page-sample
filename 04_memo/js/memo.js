@@ -53,23 +53,25 @@ function delLocalStorage() {
     "click",
     function (e) {
       e.preventDefault();
-      let w_sel = "0";
-      // w_sel = selectRadioBtn();
-      w_sel = selectCheckBox();
+      const chkbox1 = document.getElementsByName("chkbox1");
+      const table1 = document.getElementById("table1");
+      let w_cnt = 0;
+      w_cnt = selectCheckBox("del");
 
-      if (w_sel === "1") {
-        const key = document.getElementById("textKey").value;
-        const value = document.getElementById("textMemo").value;
-
+      if (w_cnt >= 1) {
         let w_confirm = window.confirm(
-          `LocalStorageから\n「${key} ${value}」\nを削除（delete）しますか？`
+          `LocalStorageから選択されている ${w_cnt} 件を削除（delete）しますか？`
         );
 
         if (w_confirm === true) {
-          localStorage.removeItem(key);
+          for (let i = 0; i < chkbox1.length; i = i + 1) {
+            if (chkbox1[i].checked) {
+              let w_key = table1.rows[i + 1].cells[1].firstChild.data;
+              localStorage.removeItem(w_key);
+            }
+          }
           viewStorage();
-          let w_msg =
-            "LocalStorageから " + key + " " + value + " を削除しました。";
+          let w_msg = `LocalStorageから ${w_cnt} 件を削除しました。`;
           window.alert(w_msg);
         }
 
@@ -111,14 +113,14 @@ function selectTable() {
     function (e) {
       e.preventDefault();
       // selectRadioBtn();
-      selectCheckBox();
+      selectCheckBox("select");
     },
     false
   );
 }
 
-function selectCheckBox() {
-  let w_sel = "0";
+function selectCheckBox(mode) {
+  // let w_sel = "0";
   let w_cnt = 0;
   const chkbox1 = document.getElementsByName("chkbox1");
   // const radio1 = document.getElementsByName("radio1");
@@ -139,12 +141,22 @@ function selectCheckBox() {
 
   document.getElementById("textKey").value = w_textKey;
   document.getElementById("textMemo").value = w_textMemo;
-  if (w_cnt === 1) {
-    return (w_sel = "1");
-  } else {
-    alert("１つ選択（select）してください。");
+
+  if (mode === "select") {
+    if (w_cnt === 1) {
+      return w_cnt;
+    } else {
+      alert("１つ選択（select）してください。");
+    }
   }
 
+  if (mode === "del") {
+    if (w_cnt >= 1) {
+      return w_cnt;
+    } else {
+      alert("１つ以上選択（select）してください。");
+    }
+  }
 }
 
 function viewStorage() {
