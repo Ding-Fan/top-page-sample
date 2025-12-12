@@ -79,6 +79,49 @@ function delLocalStorage() {
     },
     false
   );
+
+  // table1にイベントリスナーを登録し、クリックイベントをキャッチする。
+  // クリックした要素が「ごみ箱アイコン」class="trash"の場合、
+  // 該当の行に表示されているkeyをlocalStorageから削除する。
+  const table1 = document.getElementById("table1");
+  table1.addEventListener(
+    "click",
+    function (e) {
+      const target = e.target;
+      if (!target || !target.classList || !target.classList.contains("trash")) {
+        return;
+      }
+
+      e.preventDefault();
+      e.stopPropagation();
+
+      let row = target;
+      while (row && row.nodeName !== "TR") {
+        row = row.parentNode;
+      }
+      if (!row || !row.cells || row.cells.length < 2) {
+        return;
+      }
+
+      const key = row.cells[1].textContent;
+      const value = row.cells[2].textContent;
+      if (!key) {
+        return;
+      }
+
+      showConfirm(
+        `LocalStorageから\n「${key} ${value}」\nを削除（delete）しますか？`
+      ).then(function (result) {
+        if (result.value === true) {
+          localStorage.removeItem(key);
+          viewStorage();
+          let w_msg = `LocalStorageに\n「${key} ${value}」\nを削除しました。`;
+          showSuccess(w_msg);
+        }
+      });
+    },
+    false
+  );
 }
 
 function allClearLocalStorage() {
@@ -171,14 +214,17 @@ function viewStorage() {
     let td1 = document.createElement("td");
     let td2 = document.createElement("td");
     let td3 = document.createElement("td");
+    let td4 = document.createElement("td");
     list.appendChild(tr);
     tr.appendChild(td1);
     tr.appendChild(td2);
     tr.appendChild(td3);
+    tr.appendChild(td4);
 
     td1.innerHTML = "<input name='chkbox1' type='checkbox'>";
     td2.innerHTML = w_key;
     td3.innerHTML = localStorage.getItem(w_key);
+    td4.innerHTML = "<img src='img/trash_icon.png' class='trash'>";
   }
 
   $("#table1").tablesorter({
@@ -195,7 +241,7 @@ function showError(message, options = {}) {
     html: message,
     type: "error",
     allowOutsideClick: false,
-    ...options
+    ...options,
   });
 }
 
@@ -205,7 +251,7 @@ function showSuccess(message, options = {}) {
     html: message,
     type: "success",
     allowOutsideClick: false,
-    ...options
+    ...options,
   });
 }
 
@@ -215,7 +261,7 @@ function showConfirm(message, options = {}) {
     html: message,
     type: "question",
     showCancelButton: true,
-    ...options
+    ...options,
   });
 }
 
@@ -225,6 +271,6 @@ function showWarning(message, options = {}) {
     html: message,
     type: "warning",
     allowOutsideClick: false,
-    ...options
+    ...options,
   });
 }
