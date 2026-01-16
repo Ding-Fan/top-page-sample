@@ -52,7 +52,7 @@ header {
     margin-bottom: 20px;
     font-size: 2em;
     font-weight: bold;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .js-hidden {
@@ -104,7 +104,15 @@ header {
 }
 
 .js-unclickable {
-    pointer-events: none;   
+    pointer-events: none;
+}
+
+.js-win-pen {
+    border: solid 2px red !important;
+}
+
+.js-win-bear {
+    border: solid 2px blue !important;
 }
 
 
@@ -118,6 +126,11 @@ header {
     background: rgb(26, 212, 212);
     user-select: none;
     cursor: pointer;
+    transition: background 0.4s;
+}
+
+.btn:hover {
+    background: #ffd347;
 }
 
 /* Back Button */
